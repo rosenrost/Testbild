@@ -68,11 +68,22 @@ main(int argc, char* argv[])
     if (SCREEN_COLORS < 16) {
         form_alert(1, "[1][ This program does not work | with less than 16 colours. ][ Exit ]");
     } else {
-        v_hide_c(vdi_handle);
         clip_screen();
+
+        form_dial(FMD_START, 0, 0, screen_width, screen_height, 0, 0, screen_width, screen_height);
+
+        wind_update(BEG_UPDATE);
+        wind_update(BEG_MCTRL);
+
+        graf_mouse(M_OFF, NULL);
         draw_pattern();
         evnt_keybd();
-        v_show_c(vdi_handle, 0);
+        graf_mouse(M_ON, NULL);
+
+        wind_update(END_MCTRL);
+        wind_update(END_UPDATE);
+
+        form_dial(FMD_FINISH, 0, 0, screen_width, screen_height, 0, 0, screen_width, screen_height);
     }
 
     v_clsvwk(vdi_handle);
