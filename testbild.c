@@ -52,10 +52,12 @@ main(int argc, char* argv[])
     }
 
     static short work_in[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 };
+    short font_width, font_height;
     short dummy;
 
     work_in[0] = Getrez() + 2;
-    vdi_handle = graf_handle(&dummy, &dummy, &dummy, &dummy);
+
+    vdi_handle = graf_handle(&font_width, &font_height, &dummy, &dummy);
     v_opnvwk(work_in, &vdi_handle, work_out);
 
     vq_extnd(vdi_handle, 0, work_out);
@@ -82,6 +84,27 @@ main(int argc, char* argv[])
 
         wind_update(END_MCTRL);
         wind_update(END_UPDATE);
+
+        // Workaround for multitasking environments:
+        // Show a dummy menu bar to force desktop
+        // to redraw its own one after termination.
+        OBJECT dummy_menu[] = {
+            { -1,  1,  4, G_IBOX,   OF_NONE,   OS_NORMAL,   { 0L               }, 0, 0,               screen_width,   screen_height   }, //  0: root (i.e. whole screen area)
+            {  4,  2,  2, G_BOX,    OF_NONE,   OS_NORMAL,   { 0L               }, 0, 0,               screen_width,   font_height + 2 }, //  1: menu bar
+            {  1,  3,  3, G_IBOX,   OF_NONE,   OS_NORMAL,   { 0L               }, 0, 0,               screen_width,   font_height     }, //  2: top entries area
+            {  2, -1, -1, G_TITLE,  OF_NONE,   OS_NORMAL,   { (long)" Desk "   }, 0, 0,               font_width * 6, font_height * 1 }, //  3: first (and only) top entry
+            {  0,  5,  5, G_IBOX,   OF_NONE,   OS_NORMAL,   { 0L               }, 0, 2 + font_height, font_width * 8, font_height * 8 }, //  4: child area of top entry
+            {  4,  6,  6, G_BOX,    OF_NONE,   OS_NORMAL,   { 0L               }, 0, 2 + font_height, font_width * 8, font_height * 8 }, //  5: box of child area (8 children)
+            {  7, -1, -1, G_STRING, OF_NONE,   OS_NORMAL,   { (long)"  About " }, 0, 0 * font_height, font_width * 8, font_height * 1 }, //  6: first child entry
+            {  8, -1, -1, G_STRING, OF_NONE,   OS_DISABLED, { (long)"--"       }, 0, 2 * font_height, font_width * 8, font_height * 1 }, //  7: second child entry
+            {  9, -1, -1, G_STRING, OF_NONE,   OS_NORMAL,   { (long)"  "       }, 0, 3 * font_height, font_width * 8, font_height * 1 }, //  8: third child entry
+            { 10, -1, -1, G_STRING, OF_NONE,   OS_NORMAL,   { (long)"  "       }, 0, 4 * font_height, font_width * 8, font_height * 1 }, //  9: fourth child entry
+            { 11, -1, -1, G_STRING, OF_NONE,   OS_NORMAL,   { (long)"  "       }, 0, 5 * font_height, font_width * 8, font_height * 1 }, // 10: fifth child entry
+            { 12, -1, -1, G_STRING, OF_NONE,   OS_NORMAL,   { (long)"  "       }, 0, 6 * font_height, font_width * 8, font_height * 1 }, // 11: sixth child entry
+            { 13, -1, -1, G_STRING, OF_NONE,   OS_NORMAL,   { (long)"  "       }, 0, 7 * font_height, font_width * 8, font_height * 1 }, // 12: seventh child entry
+            {  5, -1, -1, G_STRING, OF_LASTOB, OS_NORMAL,   { (long)"  "       }, 0, 8 * font_height, font_width * 8, font_height * 1 }, // 13: eighth child entry
+        };
+        menu_bar(dummy_menu, MENU_INSTALL);
 
         form_dial(FMD_FINISH, 0, 0, screen_width, screen_height, 0, 0, screen_width, screen_height);
     }
