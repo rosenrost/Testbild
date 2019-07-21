@@ -6,7 +6,7 @@ PREFIX      = m68k-atari-mint-
 CSTD        = -std=c99
 #CSTD        = 
 
-CFLAGS_2    = -x c -Werror
+CFLAGS_2    = -x c -Werror -fno-builtin
 LDFLAGS_2   = -Wl,--relax -Wl,--no-whole-archive
 STARTUP     =
 
