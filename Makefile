@@ -13,7 +13,7 @@ STARTUP     =
 OPTFLAGS   = -O2
 
 ifdef USE_LIBCMINI
-CMINI_DIR   = ../libcmini
+CMINI_DIR   = ../libraries/libcmini
 CFLAGS_2   += -nostdlib -nodefaultlibs -DUSE_LIBCMINI -I$(CMINI_DIR)/include
 LDFLAGS_2  += -nostdlib -nodefaultlibs -L$(CMINI_DIR)/lib -lcmini -lgcc
 STARTUP     = $(CMINI_DIR)/lib/startup.o
@@ -23,7 +23,6 @@ CC	    = $(PREFIX)gcc.exe
 AR	    = $(PREFIX)ar.exe
 RANLIB	    = $(PREFIX)ranlib.exe
 MAKE	    = make --makefile=MAKEFILE
-STRIP	    = $(PREFIX)strip.exe
 CP          = cp -a
 MV          = mv
 SRCDIR      = $(UPDIR)src
@@ -35,7 +34,7 @@ LDFLAGS	    = -s $(LDFLAGS_2)
 TOUPPER     = | tr "[:lower:]" "[:upper:]"
 TOLOWER     = | tr "[:upper:]" "[:lower:]"
 
-.PHONY:	all clean depend dep install strip
+.PHONY:	all clean depend dep install
 
 LDLIBS	 = -lgem
 
@@ -52,10 +51,6 @@ clean:
 
 depend dep:
 	$(CC) $(CFLAGS) -MM $(SRC) >$(DEPEND)
-
-strip:
-	test -f $(PRG) && $(STRIP) $(STRIPFLAGS) $(PRG)
-	test -f $(PRGDIR)/$(PRGU) && $(STRIP) $(STRIPFLAGS) $(PRGDIR)/$(PRGU)
 
 $(PRG):	$(OBJ)
 	$(CC) $(STARTUP) -o $(PRG) $(OBJ) $(OOBJ) $(LDLIBS) $(LDFLAGS)
