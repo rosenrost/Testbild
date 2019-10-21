@@ -39,8 +39,8 @@ TOLOWER     = | tr "[:upper:]" "[:lower:]"
 LDLIBS	 = -lgem
 
 PRG	 = testbild.prg
-OBJ	 = testbild.o
-SRC      = $(OBJ:%.o=%.c)
+SRC	 = $(wildcard *.c)
+OBJ	 = $(SRC:%.c=%.o)
 
 PRGU	 = $(shell echo "$(PRG)" $(TOUPPER))
 
