@@ -60,8 +60,6 @@ main(int argc, char* argv[])
     vdi_handle = graf_handle(&font_width, &font_height, &dummy, &dummy);
     v_opnvwk(work_in, &vdi_handle, work_out);
 
-    vq_extnd(vdi_handle, 0, work_out);
-
     screen_width  = SCREEN_MAX_X + 1;
     screen_height = SCREEN_MAX_Y + 1;
     hline_width   = (screen_width  + 160) / 320;
