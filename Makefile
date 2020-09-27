@@ -16,7 +16,7 @@ ifdef USE_LIBCMINI
 CMINI_DIR   = ../libraries/libcmini
 CFLAGS_2   += -nostdlib -nodefaultlibs -DUSE_LIBCMINI -I$(CMINI_DIR)/include
 LDFLAGS_2  += -nostdlib -nodefaultlibs -L$(CMINI_DIR)/lib -lcmini -lgcc
-STARTUP     = $(CMINI_DIR)/lib/startup.o
+STARTUP     = $(CMINI_DIR)/lib/crt0.o
 endif
 
 CC	    = $(PREFIX)gcc.exe
@@ -47,7 +47,7 @@ PRGU	 = $(shell echo "$(PRG)" $(TOUPPER))
 all:	$(OBJ) $(PRG)
 
 clean:
-	rm -f $(OBJ) $(PRG) $(DEPEND)
+	rm -f $(OBJ) $(PRG)
 
 depend dep:
 	$(CC) $(CFLAGS) -MM $(SRC) >$(DEPEND)

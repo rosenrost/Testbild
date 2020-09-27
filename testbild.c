@@ -41,8 +41,7 @@ static void draw_vline(short x1, short x2, short y, short colour);
 #define TITLE           "ATARI TEST PATTERN"
 
 
-int
-main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     int app_id = appl_init();
 
@@ -114,8 +113,7 @@ main(int argc, char* argv[])
 }
 
 
-void
-draw_pattern()
+void draw_pattern()
 {
     draw_bar(0, 0, SCREEN_MAX_X, SCREEN_MAX_Y, G_LBLACK);
 
@@ -152,8 +150,7 @@ draw_pattern()
 }
 
 
-void
-draw_colours(short x, short y, short w, short h)
+void draw_colours(short x, short y, short w, short h)
 {
     static const short colours_1[] =
     {
@@ -242,8 +239,7 @@ draw_colours(short x, short y, short w, short h)
 }
 
 
-void
-draw_colour_box(short x, short y, short w, short h, short xr, short colour_count, const short colour[])
+void draw_colour_box(short x, short y, short w, short h, short xr, short colour_count, const short colour[])
 {
     short x2 = x + w - 1;
 
@@ -257,23 +253,20 @@ draw_colour_box(short x, short y, short w, short h, short xr, short colour_count
 }
 
 
-void
-clip(short x1, short y1, short x2, short y2)
+void clip(short x1, short y1, short x2, short y2)
 {
     short pxyarray[4] = { x1, y1, x2, y2 };
     vs_clip(vdi_handle, 1, pxyarray);
 }
 
 
-void
-clip_screen()
+void clip_screen()
 {
     clip(0, 0, SCREEN_MAX_X, SCREEN_MAX_Y);
 }
 
 
-void
-draw_bar(short x1, short y1, short x2, short y2, short colour)
+void draw_bar(short x1, short y1, short x2, short y2, short colour)
 {
     vsf_color(vdi_handle, colour);
     vsf_interior(vdi_handle, FIS_SOLID);
@@ -284,15 +277,13 @@ draw_bar(short x1, short y1, short x2, short y2, short colour)
 }
 
 
-void
-draw_hline(short x1, short x2, short y, short colour)
+void draw_hline(short x1, short x2, short y, short colour)
 {
     draw_bar(x1, y, x2, y + (vline_width - 1), colour);
 }
 
 
-void
-draw_vline(short x, short y1, short y2, short colour)
+void draw_vline(short x, short y1, short y2, short colour)
 {
     draw_bar(x, y1, x + (hline_width - 1), y2, colour);
 }
