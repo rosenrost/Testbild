@@ -13,7 +13,7 @@ STARTUP     =
 OPTFLAGS   = -O2
 
 ifdef USE_LIBCMINI
-CMINI_DIR   = ../libraries/libcmini
+CMINI_DIR   = /usr/local/lib/libcmini
 CFLAGS_2   += -nostdlib -nodefaultlibs -DUSE_LIBCMINI -I$(CMINI_DIR)/include
 LDFLAGS_2  += -nostdlib -nodefaultlibs -L$(CMINI_DIR)/lib -lcmini -lgcc
 STARTUP     = $(CMINI_DIR)/lib/crt0.o
